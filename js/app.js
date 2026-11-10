@@ -69,24 +69,25 @@
     return route;
   }
 
+  function normalizeState(state) {
+    Object.keys(state.games || {}).forEach(function (gid) {
+      var g = state.games[gid];
+      (g.tradeRoutes || []).forEach(migrateRoute);
+      if (g.difficulty === undefined) g.difficulty = '';
+      if (g.beginDate === undefined) g.beginDate = todayStr();
+      if (g.lastUpdate === undefined) g.lastUpdate = null;
+      if (g.checklist === undefined) g.checklist = [];
+    });
+    Object.keys(state.islands || {}).forEach(function (iid) {
+      if (state.islands[iid].checklist === undefined) state.islands[iid].checklist = [];
+    });
+    return state;
+  }
+
   function loadState() {
     try {
       var raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        var state = JSON.parse(raw);
-        Object.keys(state.games || {}).forEach(function (gid) {
-          var g = state.games[gid];
-          (g.tradeRoutes || []).forEach(migrateRoute);
-          if (g.difficulty === undefined) g.difficulty = '';
-          if (g.beginDate === undefined) g.beginDate = todayStr();
-          if (g.lastUpdate === undefined) g.lastUpdate = null;
-          if (g.checklist === undefined) g.checklist = [];
-        });
-        Object.keys(state.islands || {}).forEach(function (iid) {
-          if (state.islands[iid].checklist === undefined) state.islands[iid].checklist = [];
-        });
-        return state;
-      }
+      if (raw) return normalizeState(JSON.parse(raw));
     } catch (e) { /* fall through to default */ }
     return defaultState();
   }
@@ -95,9 +96,46 @@
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
     } catch (e) { /* storage unavailable, silently skip */ }
+    pushStateToCloud();
   }
 
   var STATE = loadState();
+
+  // ---- Supabase sync: localStorage stays the instant local copy, Supabase is what carries
+  // state between browsers/devices. Last write (by timestamp) wins — there's no per-user
+  // auth here, just a single shared row per the project's "shared passphrase gate" model.
+  var SUPABASE_URL = 'https://fljzhgfmgswqxhatezhn.supabase.co';
+  var SUPABASE_ANON_KEY = 'sb_publishable_mPSg2RcST_3rw3wYrfO-5A_Uta3Nj12';
+  var STATE_ROW_ID = 'default';
+  var sb = (window.supabase && window.supabase.createClient)
+    ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+    : null;
+  var cloudPushTimer = null;
+
+  function pushStateToCloud() {
+    if (!sb) return;
+    clearTimeout(cloudPushTimer);
+    cloudPushTimer = setTimeout(function () {
+      sb.from('anno_state')
+        .upsert({ id: STATE_ROW_ID, data: STATE, updated_at: new Date().toISOString() })
+        .then(function (res) { if (res.error) console.error('Anno Tracker: cloud save failed', res.error); });
+    }, 800);
+  }
+
+  function pullStateFromCloud() {
+    if (!sb) return;
+    sb.from('anno_state').select('data').eq('id', STATE_ROW_ID).maybeSingle()
+      .then(function (res) {
+        if (res.error) { console.error('Anno Tracker: cloud load failed', res.error); return; }
+        if (res.data && res.data.data) {
+          STATE = normalizeState(res.data.data);
+          try { localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE)); } catch (e) { /* ignore */ }
+          renderAll();
+        } else {
+          pushStateToCloud();
+        }
+      });
+  }
 
   function currentGame() { return STATE.games[STATE.currentGameId]; }
   function currentIsland() { return STATE.islands[STATE.currentIslandId]; }
@@ -1528,6 +1566,7 @@
     if (e.target.id === 'home-difficulty') { currentGame().difficulty = e.target.value; saveState(); }
   });
 
-  document.addEventListener('DOMContentLoaded', renderAll);
-  if (document.readyState !== 'loading') renderAll();
+  function init() { renderAll(); pullStateFromCloud(); }
+  document.addEventListener('DOMContentLoaded', init);
+  if (document.readyState !== 'loading') init();
 })();
