@@ -12,21 +12,14 @@
 <body>
 
 <div class="app-shell">
-  <div class="crumb">Anno Tracker &nbsp;/&nbsp; <b id="crumb-game-name">Lindwurm</b> &nbsp;/&nbsp; <span id="crumb-tab-name">Summary</span></div>
-
-  <div class="tabs" id="main-tabs">
-    <button type="button" class="tab active" data-panel="panel-summary">Summary</button>
-    <button type="button" class="tab" data-panel="panel-islands">Islands</button>
-    <button type="button" class="tab" data-panel="panel-calculator">Calculator</button>
-    <button type="button" class="tab" data-panel="panel-log">Log</button>
-  </div>
+  <div class="crumb">Anno Tracker &nbsp;/&nbsp; <b id="crumb-game-name">Lindwurm</b> &nbsp;/&nbsp; <span class="crumb-tabs" id="main-tabs"><button type="button" class="crumb-tab active" data-panel="panel-summary">Summary</button><span class="crumb-sep"> / </span><button type="button" class="crumb-tab" data-panel="panel-islands">Islands</button><span class="crumb-sep"> / </span><button type="button" class="crumb-tab" data-panel="panel-calculator">Calculator</button><span class="crumb-sep"> / </span><button type="button" class="crumb-tab" data-panel="panel-log">Log</button></span></div>
 
   <div class="panel" id="panel-summary">
 
     <!-- game info -->
     <div class="section">
-      <button type="button" class="section-label toggle-head" data-toggle="home-game-info-body">Game info <span class="chevron">&#9662;</span></button>
-      <div class="toggle-body" id="home-game-info-body">
+      <button type="button" class="section-label toggle-head collapsed" data-toggle="home-game-info-body">Game info <span class="chevron">&#9662;</span></button>
+      <div class="toggle-body collapsed" id="home-game-info-body">
         <div class="field-table">
           <div class="field-row">
             <span class="field-label">Game</span>
@@ -50,8 +43,8 @@
 
     <!-- checklist (game + per island) -->
     <div class="section">
-      <button type="button" class="section-label toggle-head" data-toggle="home-checklist-body">Checklist <span class="chevron">&#9662;</span></button>
-      <div class="toggle-body" id="home-checklist-body">
+      <button type="button" class="section-label toggle-head collapsed" data-toggle="home-checklist-body">Checklist <span class="chevron">&#9662;</span></button>
+      <div class="toggle-body collapsed" id="home-checklist-body">
         <p class="subsection-label">Game checklist</p>
         <div class="checklist-sub" id="home-game-checklist"></div>
         <p class="subsection-label" style="margin-top:16px;">By island</p>
@@ -61,22 +54,22 @@
 
     <!-- trade routes info -->
     <div class="section">
-      <button type="button" class="section-label toggle-head" data-toggle="home-trade-body">Trade routes <span class="chevron">&#9662;</span></button>
-      <div class="toggle-body" id="home-trade-body">
+      <button type="button" class="section-label toggle-head collapsed" data-toggle="home-trade-body">Trade routes <span class="chevron">&#9662;</span></button>
+      <div class="toggle-body collapsed" id="home-trade-body">
         <div id="home-trade-routes"></div>
       </div>
     </div>
 
     <!-- supply chain rollups -->
     <div class="section">
-      <button type="button" class="section-label toggle-head" data-toggle="home-ledger-body">Supply chain rollups <span class="chevron">&#9662;</span></button>
-      <div class="toggle-body" id="home-ledger-body">
+      <button type="button" class="section-label toggle-head collapsed" data-toggle="home-ledger-body">Supply chain rollups <span class="chevron">&#9662;</span></button>
+      <div class="toggle-body collapsed" id="home-ledger-body">
         <div class="lv2-toggle">
-          <button type="button" class="lv2-toggle-head" data-toggle="home-ledger-game-body">
+          <button type="button" class="lv2-toggle-head collapsed" data-toggle="home-ledger-game-body">
             <span>Full ledger &mdash; by game</span>
             <span class="chevron">&#9662;</span>
           </button>
-          <div class="lv2-toggle-body" id="home-ledger-game-body">
+          <div class="lv2-toggle-body collapsed" id="home-ledger-game-body">
             <table class="data-table sortable ledger-table">
               <thead><tr><th data-sort="text">Good</th><th data-sort="num" class="num">Production</th><th data-sort="num" class="num">Trade</th><th data-sort="num" class="num">Total</th><th data-sort="num" class="num">Need</th><th data-sort="num" class="num">Difference</th></tr></thead>
               <tbody id="home-ledger-game-rows"></tbody>
@@ -84,20 +77,20 @@
           </div>
         </div>
         <div class="lv2-toggle">
-          <button type="button" class="lv2-toggle-head" data-toggle="home-ledger-region-body">
+          <button type="button" class="lv2-toggle-head collapsed" data-toggle="home-ledger-region-body">
             <span>Full ledger &mdash; by region</span>
             <span class="chevron">&#9662;</span>
           </button>
-          <div class="lv2-toggle-body" id="home-ledger-region-body">
+          <div class="lv2-toggle-body collapsed" id="home-ledger-region-body">
             <div id="home-ledger-region-tables"></div>
           </div>
         </div>
         <div class="lv2-toggle">
-          <button type="button" class="lv2-toggle-head" data-toggle="home-ledger-island-body">
+          <button type="button" class="lv2-toggle-head collapsed" data-toggle="home-ledger-island-body">
             <span>Full ledger &mdash; by island</span>
             <span class="chevron">&#9662;</span>
           </button>
-          <div class="lv2-toggle-body" id="home-ledger-island-body">
+          <div class="lv2-toggle-body collapsed" id="home-ledger-island-body">
             <table class="data-table sortable">
               <thead><tr id="home-ledger-island-head"><th data-sort="text">Good</th></tr></thead>
               <tbody id="home-ledger-island-rows"></tbody>
@@ -163,8 +156,8 @@
 
     <!-- resources (lv1 toggle) -->
     <div class="section">
-      <button type="button" class="section-label toggle-head" data-toggle="resources-body">Resources <span class="chevron">&#9662;</span></button>
-      <div class="toggle-body" id="resources-body">
+      <button type="button" class="section-label toggle-head collapsed" data-toggle="resources-body">Resources <span class="chevron">&#9662;</span></button>
+      <div class="toggle-body collapsed" id="resources-body">
 
         <p class="subsection-label">Regional abundances</p>
         <div class="abundance-row" id="abundance-row"></div>
@@ -204,14 +197,14 @@
 
     <!-- supply chain (lv1 toggle) -->
     <div class="section">
-      <button type="button" class="section-label toggle-head" data-toggle="supply-chain-body">Supply chain <span class="chevron">&#9662;</span></button>
-      <div class="toggle-body" id="supply-chain-body">
+      <button type="button" class="section-label toggle-head collapsed" data-toggle="supply-chain-body">Supply chain <span class="chevron">&#9662;</span></button>
+      <div class="toggle-body collapsed" id="supply-chain-body">
         <div class="lv2-toggle">
-          <button type="button" class="lv2-toggle-head" data-toggle="sc-body">
+          <button type="button" class="lv2-toggle-head collapsed" data-toggle="sc-body">
             <span>Full ledger &mdash; Production / Trade / Total vs. Need</span>
             <span class="chevron">&#9662;</span>
           </button>
-          <div class="lv2-toggle-body" id="sc-body">
+          <div class="lv2-toggle-body collapsed" id="sc-body">
             <p class="subtext">Need is demand from everywhere for that good &mdash; population Needs (Basic/Luxury, and Lifestyle while on) plus whatever downstream buildings in Production consume it. Trade is the net of every route's cargo arriving at or leaving this island. Click a column header to sort.</p>
             <table class="data-table sortable ledger-table">
               <thead>
@@ -233,19 +226,19 @@
 
     <!-- population (lv1 toggle) -->
     <div class="section">
-      <button type="button" class="section-label toggle-head" data-toggle="population-body">Population <span class="chevron">&#9662;</span></button>
-      <div class="toggle-body" id="population-body">
+      <button type="button" class="section-label toggle-head collapsed" data-toggle="population-body">Population <span class="chevron">&#9662;</span></button>
+      <div class="toggle-body collapsed" id="population-body">
 
         <p class="subsection-label">By tier</p>
         <p class="subtext">Occupancy is the number of people per house (defaults to the base figure from the knowledge base). Houses is calculated from Population &divide; Occupancy, rounded up.</p>
         <div class="pop-list" id="pop-list"></div>
 
         <div class="lv2-toggle">
-          <button type="button" class="lv2-toggle-head" data-toggle="needs-body">
+          <button type="button" class="lv2-toggle-head collapsed" data-toggle="needs-body">
             <span>Per population type consumption — t/min by tier</span>
             <span class="chevron">&#9662;</span>
           </button>
-          <div class="lv2-toggle-body" id="needs-body">
+          <div class="lv2-toggle-body collapsed" id="needs-body">
             <p class="subtext">Consumption scales with Houses &times; Occupancy, not the raw population number. Every row has its own &#9654; pause (Locked rows can't be, they're already inactive); paused and Locked rows drop out of the category totals and Supply Chain below. Click any column header to sort &mdash; including Tier, to group a tier's rows together.</p>
             <div class="needs-tier-heads" id="needs-tier-heads"></div>
             <table class="data-table sortable" id="needs-table">
@@ -259,8 +252,8 @@
 
     <!-- production (lv1 toggle) -->
     <div class="section">
-      <button type="button" class="section-label toggle-head" data-toggle="production-body">Production <span class="chevron">&#9662;</span></button>
-      <div class="toggle-body" id="production-body">
+      <button type="button" class="section-label toggle-head collapsed" data-toggle="production-body">Production <span class="chevron">&#9662;</span></button>
+      <div class="toggle-body collapsed" id="production-body">
         <p class="subtext">Every building in a chain has its own count, so Supply Chain can track intermediates too, not just the final product. Chains below are whatever this island's current region has modeled.</p>
         <div id="production-chains"></div>
         <button class="btn-ghost" type="button">+ Add production chain</button>
@@ -269,8 +262,8 @@
 
     <!-- trade (lv1 toggle) -->
     <div class="section">
-      <button type="button" class="section-label toggle-head" data-toggle="trade-body">Trade <span class="chevron">&#9662;</span></button>
-      <div class="toggle-body" id="trade-body">
+      <button type="button" class="section-label toggle-head collapsed" data-toggle="trade-body">Trade <span class="chevron">&#9662;</span></button>
+      <div class="toggle-body collapsed" id="trade-body">
         <p class="subtext">A stop is either one of your islands or an outside party (NPC / trading post, free text) &mdash; trade isn't limited to islands this app tracks. Each cargo row is one good moving on one leg: Quantity is tons per trip, Time is optional (minutes); with both set, Rate (t/min) feeds Supply Chain's Trade column for whichever island is this route's endpoint &mdash; arriving adds, leaving subtracts, including to NPC stops (that's how a good "leaves" the system).</p>
         <div id="trade-routes"></div>
         <button class="btn-ghost" type="button" id="add-trade-route-btn">+ Add trade route</button>
@@ -282,8 +275,8 @@
   <div class="panel" id="panel-calculator" hidden>
 
     <div class="section">
-      <button type="button" class="section-label toggle-head" data-toggle="calc-intro-body">Calculator <span class="chevron">&#9662;</span></button>
-      <div class="toggle-body" id="calc-intro-body">
+      <button type="button" class="section-label toggle-head collapsed" data-toggle="calc-intro-body">Calculator <span class="chevron">&#9662;</span></button>
+      <div class="toggle-body collapsed" id="calc-intro-body">
         <p class="subtext">A scratch sandbox for planning &mdash; same math as Islands, but nothing here is saved. Pick a region, type counts, see the numbers. Reload or switch regions and it resets.</p>
         <div class="tabs calc-region-tabs">
           <button type="button" class="tab active" data-calc-region="old-world">Old World</button>
@@ -296,8 +289,8 @@
 
     <!-- resources -->
     <div class="section">
-      <button type="button" class="section-label toggle-head" data-toggle="calc-resources-body">Resources <span class="chevron">&#9662;</span></button>
-      <div class="toggle-body" id="calc-resources-body">
+      <button type="button" class="section-label toggle-head collapsed" data-toggle="calc-resources-body">Resources <span class="chevron">&#9662;</span></button>
+      <div class="toggle-body collapsed" id="calc-resources-body">
         <div class="table-pair">
           <div>
             <p class="subsection-label">Fertilities</p>
@@ -319,15 +312,15 @@
 
     <!-- population -->
     <div class="section">
-      <button type="button" class="section-label toggle-head" data-toggle="calc-population-body">Population <span class="chevron">&#9662;</span></button>
-      <div class="toggle-body" id="calc-population-body">
+      <button type="button" class="section-label toggle-head collapsed" data-toggle="calc-population-body">Population <span class="chevron">&#9662;</span></button>
+      <div class="toggle-body collapsed" id="calc-population-body">
         <div class="pop-list" id="calc-pop-list"></div>
         <div class="lv2-toggle">
-          <button type="button" class="lv2-toggle-head" data-toggle="calc-needs-body">
+          <button type="button" class="lv2-toggle-head collapsed" data-toggle="calc-needs-body">
             <span>Per population type consumption — t/min by tier</span>
             <span class="chevron">&#9662;</span>
           </button>
-          <div class="lv2-toggle-body" id="calc-needs-body">
+          <div class="lv2-toggle-body collapsed" id="calc-needs-body">
             <div class="needs-tier-heads" id="calc-needs-tier-heads"></div>
             <table class="data-table sortable" id="calc-needs-table">
               <thead><tr><th></th><th data-sort="text">Tier</th><th data-sort="text">Need</th><th data-sort="text">Type</th><th data-sort="num" class="num">t/min</th></tr></thead>
@@ -340,16 +333,16 @@
 
     <!-- production -->
     <div class="section">
-      <button type="button" class="section-label toggle-head" data-toggle="calc-production-body">Production <span class="chevron">&#9662;</span></button>
-      <div class="toggle-body" id="calc-production-body">
+      <button type="button" class="section-label toggle-head collapsed" data-toggle="calc-production-body">Production <span class="chevron">&#9662;</span></button>
+      <div class="toggle-body collapsed" id="calc-production-body">
         <div id="calc-production-chains"></div>
       </div>
     </div>
 
     <!-- supply chain -->
     <div class="section">
-      <button type="button" class="section-label toggle-head" data-toggle="calc-supply-chain-body">Supply chain <span class="chevron">&#9662;</span></button>
-      <div class="toggle-body" id="calc-supply-chain-body">
+      <button type="button" class="section-label toggle-head collapsed" data-toggle="calc-supply-chain-body">Supply chain <span class="chevron">&#9662;</span></button>
+      <div class="toggle-body collapsed" id="calc-supply-chain-body">
         <table class="data-table sortable">
           <thead><tr><th data-sort="text">Good</th><th data-sort="num" class="num">Production</th><th data-sort="num" class="num">Need</th><th data-sort="num" class="num">Difference</th></tr></thead>
           <tbody id="calc-sc-body-rows"></tbody>

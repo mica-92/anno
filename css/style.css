@@ -29,7 +29,7 @@ html,body{margin:0;}
 body{
   background:var(--paper); color:var(--ink);
   font-family:var(--font-body); font-size:14px;
-  padding:24px 16px 64px;
+  padding:0 16px;
 }
 a{color:inherit;}
 
@@ -41,6 +41,16 @@ a{color:inherit;}
 }
 .crumb b{color:var(--ink); font-weight:700;}
 
+/* crumb-as-tabs: the active destination is bold, the rest are plain clickable text */
+.crumb-tabs{display:inline;}
+.crumb-sep{color:var(--gray-300);}
+.crumb-tab{
+  font:inherit; letter-spacing:inherit; text-transform:inherit;
+  background:none; border:none; padding:0; margin:0; color:var(--gray-600); cursor:pointer;
+}
+.crumb-tab:hover{color:var(--ink);}
+.crumb-tab.active{color:var(--ink); font-weight:700;}
+
 .tabs{display:flex; gap:0; border:1px solid var(--ink); overflow-x:auto;}
 .calc-region-tabs{margin-bottom:16px;}
 .tab{
@@ -51,7 +61,7 @@ a{color:inherit;}
 .tab:last-child{border-right:none;}
 .tab.active{background:var(--ink); color:#FFFFFF; font-weight:700;}
 
-.panel{border:1px solid var(--ink); border-top:none; background:var(--surface); padding:0;}
+.panel{border-left:1px solid var(--ink); border-right:1px solid var(--ink); background:var(--surface); padding:0;}
 .section{border-bottom:1px solid var(--gray-150); padding:20px;}
 .section:last-child{border-bottom:none;}
 .section-label{
@@ -338,7 +348,7 @@ tr.present .fert-pill{color:var(--state-good-fg);}
 
 /* ===== mobile (phones — tuned for ~480px CSS viewport width, e.g. Galaxy S25 Ultra) ===== */
 @media (max-width: 600px){
-  body{font-size:13px; padding:16px 10px 48px;}
+  body{font-size:13px; padding:0 10px;}
   .app-shell{max-width:100%;}
   .crumb{font-size:10px;}
   .tab{padding:9px 10px; font-size:11px;}
@@ -377,8 +387,13 @@ tr.present .fert-pill{color:var(--state-good-fg);}
   /* Game/Island rename+add+delete buttons always drop to their own line below the select */
   .field-row .icon-btn-group{flex:1 1 100%; justify-content:flex-start; margin-top:4px;}
 
-  .route-head{flex-wrap:wrap; row-gap:6px;}
+  .route-card{padding:10px 12px;}
+  .route-head{flex-wrap:wrap; row-gap:8px;}
+  .route-name-input{flex:1 1 100%; width:100%; min-width:0;}
+  .route-head .add-stop-btn{flex:0 0 auto; margin-top:0;}
   .route-stops{overflow-x:auto; white-space:nowrap; padding-bottom:4px;}
+  .stop-select, .cargo-from-select, .cargo-to-select{max-width:120px; overflow:hidden; text-overflow:ellipsis;}
+  .stop-npc-input{width:72px;}
 
   .category-totals{grid-template-columns:repeat(2,1fr);}
 

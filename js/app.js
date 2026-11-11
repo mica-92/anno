@@ -337,9 +337,9 @@
     }).join('');
     document.getElementById('calc-resources-body-rows').innerHTML = region.resources.map(function (good) {
       var count = island.resources[good] || 0;
-      return '<tr class="' + (count > 1 ? 'present' : '') + '" data-good="' + escAttr(good) + '">'
+      return '<tr class="' + (count > 0 ? 'present' : '') + '" data-good="' + escAttr(good) + '">'
         + '<td>' + escHtml(good) + '</td>'
-        + '<td class="num"><input type="text" class="resource-count-input editable-num num-right" value="' + (count ? count : '') + '" placeholder="#"></td>'
+        + '<td class="num"><input type="text" inputmode="numeric" class="resource-count-input editable-num num-right" value="' + (count ? count : '') + '" placeholder="#"></td>'
         + '</tr>';
     }).join('');
   }
@@ -351,11 +351,11 @@
       var p = island.population[t.key] || { pop: 0, occ: t.baseCapacity };
       return '<div class="pop-row" data-tier="' + t.key + '" data-base-capacity="' + t.baseCapacity + '">'
         + '<span class="pop-card-tier">' + escHtml(t.label) + '</span>'
-        + '<span class="pop-stat pop-stat-count"><input type="text" class="pop-count-input editable-num" value="' + (p.pop || '') + '" placeholder="#"> pop</span>'
-        + '<span class="pop-stat pop-stat-houses"><input type="text" class="pop-houses-input editable-num" value="" placeholder="#"> houses</span>'
+        + '<span class="pop-stat pop-stat-count"><input type="text" inputmode="numeric" class="pop-count-input editable-num" value="' + (p.pop || '') + '" placeholder="#"> pop</span>'
+        + '<span class="pop-stat pop-stat-houses"><input type="text" inputmode="numeric" class="pop-houses-input editable-num" value="" placeholder="#"> houses</span>'
         + '<div class="pop-bar-track"><div class="pop-bar-fill" style="width:0%;"></div></div>'
         + '<div class="pop-card-stats">'
-        + '<span class="pop-stat"><input type="text" class="pop-occupancy-input editable-num" value="' + (p.occ || t.baseCapacity) + '" placeholder="#"> occ/house</span>'
+        + '<span class="pop-stat"><input type="text" inputmode="numeric" class="pop-occupancy-input editable-num" value="' + (p.occ || t.baseCapacity) + '" placeholder="#"> occ/house</span>'
         + '</div></div>';
     }).join('');
     var root = calcPanelRoot();
@@ -422,7 +422,7 @@
         }).join('');
         return '<tr class="chain-build" data-good="' + escAttr(b.good) + '" data-output-rate="' + b.outputRate + '" data-chain="' + chainIdx + '" data-build="' + escAttr(b.name) + '">'
           + '<td>' + escHtml(b.name) + '</td>'
-          + '<td class="num"><input type="text" class="chain-count-input editable-num num-right" value="' + (count || '') + '" placeholder="#"></td>'
+          + '<td class="num"><input type="text" inputmode="numeric" class="chain-count-input editable-num num-right" value="' + (count || '') + '" placeholder="#"></td>'
           + '<td class="num chain-build-output">0.00 t/min</td>'
           + '<td class="consumes-col"><div class="consumes-cell-inner">' + inputsHtml + '</div></td></tr>';
       }).join('');
@@ -556,7 +556,7 @@
   function handleCalcInput(e) {
     if (e.target.matches('.resource-count-input')) {
       var count = parseInt(e.target.value, 10) || 0;
-      e.target.closest('tr').classList.toggle('present', count > 1);
+      e.target.closest('tr').classList.toggle('present', count > 0);
       calcIsland().resources[e.target.closest('tr').dataset.good] = count;
       return true;
     }
@@ -632,9 +632,9 @@
     var resBody = document.getElementById('resources-body-rows');
     resBody.innerHTML = region.resources.map(function (good) {
       var count = island.resources[good] || 0;
-      return '<tr class="' + (count > 1 ? 'present' : '') + '" data-good="' + escAttr(good) + '">'
+      return '<tr class="' + (count > 0 ? 'present' : '') + '" data-good="' + escAttr(good) + '">'
         + '<td>' + escHtml(good) + '</td>'
-        + '<td class="num"><input type="text" class="resource-count-input editable-num num-right" value="' + (count ? count : '') + '" placeholder="#"></td>'
+        + '<td class="num"><input type="text" inputmode="numeric" class="resource-count-input editable-num num-right" value="' + (count ? count : '') + '" placeholder="#"></td>'
         + '</tr>';
     }).join('');
 
@@ -650,11 +650,11 @@
       var p = island.population[t.key] || { pop: 0, occ: t.baseCapacity };
       return '<div class="pop-row" data-tier="' + t.key + '" data-base-capacity="' + t.baseCapacity + '">'
         + '<span class="pop-card-tier">' + escHtml(t.label) + '</span>'
-        + '<span class="pop-stat pop-stat-count"><input type="text" class="pop-count-input editable-num" value="' + (p.pop || '') + '" placeholder="#"> pop</span>'
-        + '<span class="pop-stat pop-stat-houses"><input type="text" class="pop-houses-input editable-num" value="" placeholder="#"> houses</span>'
+        + '<span class="pop-stat pop-stat-count"><input type="text" inputmode="numeric" class="pop-count-input editable-num" value="' + (p.pop || '') + '" placeholder="#"> pop</span>'
+        + '<span class="pop-stat pop-stat-houses"><input type="text" inputmode="numeric" class="pop-houses-input editable-num" value="" placeholder="#"> houses</span>'
         + '<div class="pop-bar-track"><div class="pop-bar-fill" style="width:0%;"></div></div>'
         + '<div class="pop-card-stats">'
-        + '<span class="pop-stat"><input type="text" class="pop-occupancy-input editable-num" value="' + (p.occ || t.baseCapacity) + '" placeholder="#"> occ/house</span>'
+        + '<span class="pop-stat"><input type="text" inputmode="numeric" class="pop-occupancy-input editable-num" value="' + (p.occ || t.baseCapacity) + '" placeholder="#"> occ/house</span>'
         + '</div></div>';
     }).join('');
     list.querySelectorAll('.pop-row').forEach(updateTierPopulation);
@@ -720,7 +720,7 @@
         }).join('');
         return '<tr class="chain-build" data-good="' + escAttr(b.good) + '" data-output-rate="' + b.outputRate + '" data-chain="' + chainIdx + '" data-build="' + escAttr(b.name) + '">'
           + '<td>' + escHtml(b.name) + '</td>'
-          + '<td class="num"><input type="text" class="chain-count-input editable-num num-right" value="' + (count || '') + '" placeholder="#"></td>'
+          + '<td class="num"><input type="text" inputmode="numeric" class="chain-count-input editable-num num-right" value="' + (count || '') + '" placeholder="#"></td>'
           + '<td class="num chain-build-output">0.00 t/min</td>'
           + '<td class="consumes-col"><div class="consumes-cell-inner">' + inputsHtml + '</div></td></tr>';
       }).join('');
@@ -780,8 +780,8 @@
         var rate = cargoRate(c);
         return '<tr data-route="' + routeIdx + '" data-cargo="' + cargoIdx + '">'
           + '<td data-label="Good"><input type="text" class="cargo-good-input editable-num" value="' + escAttr(c.good || '') + '" placeholder="#"></td>'
-          + '<td class="num" data-label="Quantity"><input type="text" class="cargo-qty-input editable-num num-right" value="' + (c.quantity || '') + '" placeholder="#"></td>'
-          + '<td class="num" data-label="Time"><input type="text" class="cargo-time-input editable-num num-right" value="' + (c.timeMinutes || '') + '" placeholder="#"></td>'
+          + '<td class="num" data-label="Quantity"><input type="text" inputmode="numeric" class="cargo-qty-input editable-num num-right" value="' + (c.quantity || '') + '" placeholder="#"></td>'
+          + '<td class="num" data-label="Time"><input type="text" inputmode="numeric" class="cargo-time-input editable-num num-right" value="' + (c.timeMinutes || '') + '" placeholder="#"></td>'
           + '<td class="num" data-label="Rate">' + (rate !== null ? rate.toFixed(2) + ' t/min' : '—') + '</td>'
           + '<td data-label="From"><select class="cargo-from-select">' + stopOptionsHtml(c.fromStop) + '</select></td>'
           + '<td data-label="To"><select class="cargo-to-select">' + stopOptionsHtml(c.toStop) + '</select></td>'
@@ -1160,15 +1160,13 @@
 
   // ===== event wiring =====
   document.addEventListener('click', function (e) {
-    var tabBtn = e.target.closest('#main-tabs > .tab');
+    var tabBtn = e.target.closest('#main-tabs .crumb-tab');
     if (tabBtn) {
-      document.querySelectorAll('#main-tabs > .tab').forEach(function (t) { t.classList.remove('active'); });
+      document.querySelectorAll('#main-tabs .crumb-tab').forEach(function (t) { t.classList.remove('active'); });
       tabBtn.classList.add('active');
       document.querySelectorAll('.panel').forEach(function (p) { p.hidden = true; });
       var panel = document.getElementById(tabBtn.dataset.panel);
       if (panel) panel.hidden = false;
-      var crumbTab = document.getElementById('crumb-tab-name');
-      if (crumbTab) crumbTab.textContent = tabBtn.textContent.trim();
       if (tabBtn.dataset.panel === 'panel-summary') renderHome();
       if (tabBtn.dataset.panel === 'panel-islands') renderIslandChecklist();
       if (tabBtn.dataset.panel === 'panel-calculator') renderCalc();
@@ -1497,7 +1495,7 @@
     var island = currentIsland();
     if (e.target.matches('.resource-count-input')) {
       var count = parseInt(e.target.value, 10) || 0;
-      e.target.closest('tr').classList.toggle('present', count > 1);
+      e.target.closest('tr').classList.toggle('present', count > 0);
       island.resources[e.target.closest('tr').dataset.good] = count;
       saveState();
       return;
